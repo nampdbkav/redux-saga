@@ -252,3 +252,8 @@ button:hover {
 label {
     color: #777;
 }
+
+.image{
+    text-align: center;
+    z-index: -1;
+}

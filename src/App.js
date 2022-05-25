@@ -1,34 +1,14 @@
-import React, { Fragment } from 'react';
-
-//Component
-import TodoList from './components/TodoList';
-import { ThemeProvider } from './components/ThemeContext'
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-
-//Css
+import React from 'react';
 import './css/Todo.css'
+import TodoList from './components/TodoList';
+import { ThemeProvider } from './components/ThemeContext';
 
-function App() {
+const App = () => {
   return (
-    <Fragment>
-      <ThemeProvider>
-        <TodoList />
-      </ThemeProvider>
-      <ToastContainer
-        position="top-right"
-        autoClose={2500}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover={false}
-      />
-    </Fragment>
-  );
+    <ThemeProvider>
+      <TodoList />
+    </ThemeProvider>
+  )
 }
 
 export default App;

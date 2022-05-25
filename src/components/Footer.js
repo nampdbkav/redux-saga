@@ -1,30 +1,20 @@
-
-import React, { Fragment, useContext } from "react";
-import { setShow } from "../actions/action";
-import Link from "./Link";
+import React, { useContext } from "react";
 import { ThemeContext } from './ThemeContext'
 
-const Footer = ({ countActive, isLoading, removeComplete, removeCompleted }) => {
+const Footer = ({ countActive }) => {
     const theme = useContext(ThemeContext)
     return (
-        <Fragment>
-            <div className='footer'>
-                <div className={theme}>
-                    {countActive}
-                    <span>: items left</span>
-                </div>
-                <div >
-                    <Link filter={setShow.SHOW_ALL}>All</Link>
-                    <Link filter={setShow.SHOW_ACTIVE}>Active</Link>
-                    <Link filter={setShow.SHOW_COMPLETED}>Complete</Link>
-                    {removeCompleted ? (
-                        <button className='btn-edit' onClick={removeComplete}>{' '}
-                            ClearComplete
-                        </button>
-                    ) : null}
-                </div>
+        <div className="footer" style={{ theme }}>
+            <div>
+                {countActive}
+                <span>: items left</span>
             </div>
-        </Fragment>
+            <div>
+                <button>All</button>
+                <button>Active</button>
+                <button>Complete</button>
+            </div>
+        </div>
     )
 }
 
