@@ -1,7 +1,6 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-
-import { getTodosData, addTodosData, deleteTodosData, editTodosData, completeTodosData, completeAllTodosData } from './todosAPI'
-import { addListTodoSuccess, editListTodoSuccess, deleteListTodoSuccess, getListTodoSuccess, completeListTodoSuccess, completeAllListTodoSuccess } from '../action/action';
+import { getTodosData, addTodosData, deleteTodosData, editTodosData, completeTodosData, completeAllTodosData, clearCompleteTodosData } from './todosAPI'
+import { addListTodoSuccess, editListTodoSuccess, deleteListTodoSuccess, getListTodoSuccess, completeListTodoSuccess, completeAllListTodoSuccess, clearCompleteListTodoSuccess } from '../action/action';
 
 //Fetch Todos
 function* getListTodoSaga() {
@@ -94,8 +93,22 @@ function* onCompleteAll() {
     yield takeLatest('COMPLETE_ALL_TODO', completeAllTodo)
 }
 
+//Remove Complete Todo
+function* clearCompleteTodo() {
+    try {
+        const data = yield call(clearCompleteTodosData)
+        yield put(clearCompleteListTodoSuccess(data))
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+function* onClear() {
+    yield takeLatest('CLEAR_COMPLETE_LIST_TODO', clearCompleteTodo)
+}
+
 function* todos() {
-    yield all([call(todosSaga), call(onAdd), call(onDelete), call(onEdit), call(onComplete), call(onCompleteAll)])
+    yield all([call(todosSaga), call(onAdd), call(onDelete), call(onEdit), call(onComplete), call(onCompleteAll), call(onClear)])
 }
 
 export default todos;

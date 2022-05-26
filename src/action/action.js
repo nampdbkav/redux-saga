@@ -90,15 +90,28 @@ export const completeListTodoSuccess = (data) => {
 }
 
 //Complete All Todo
-export const completeAllListTodo = () => {
+export const completeAllListTodo = (payload) => {
     return {
         type: 'COMPLETE_ALL_LIST_TODO',
+        payload
     }
 }
 
 export const completeAllListTodoSuccess = () => {
-    debugger;
     return {
         type: 'COMPLETE_ALL_LIST_TODO_SUCCESS',
+    }
+}
+
+//Remove Complete Todo
+export const clearCompleteListTodo = () => {
+    return {
+        type: 'CLEAR_COMPLETE_LIST_TODO',
+    }
+}
+
+export const clearCompleteListTodoSuccess = () => {
+    return {
+        type: 'CLEAR_COMPLETE_LIST_TODO_SUCCESS',
     }
 }

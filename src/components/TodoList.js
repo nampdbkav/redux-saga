@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useContext, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import { addListTodo, getListTodo, deleteListTodo, editListTodo, completeListTodo, completeAllListTodo } from '../action/action';
+import { addListTodo, getListTodo, deleteListTodo, editListTodo, completeListTodo, completeAllListTodo, clearCompleteListTodo } from '../action/action';
 import { ThemeContext } from './ThemeContext';
 import Header from './Header';
 import TodoItem from './TodoItem'
 import Footer from './Footer';
 
 
-const TodoList = ({ todosList, getTodo, onAddTodo, onClickDelete, onClickEdit, onClickComplete, onClickAllComplete }) => {
+const TodoList = ({ todosList, getTodo, onAddTodo, onClickDelete, onClickEdit, onClickComplete, onClickAllComplete, onClearComplete }) => {
 
     const { todos, load } = todosList
     const [isLoad, setIsLoad] = useState(load)
@@ -28,13 +28,13 @@ const TodoList = ({ todosList, getTodo, onAddTodo, onClickDelete, onClickEdit, o
             id: 'id'
         }
         const sorted = [...todos].sort((a, b) => b[types.id] - a[types.id])
-        console.log('...', sorted);
         setData(sorted)
     }, [todos])
 
     const theme = useContext(ThemeContext)
 
     let countActive = [...todos].filter((todo) => !todo.complete).length
+    let clearComplete = [...todos].some(todo => todo.complete)
 
     return (
         <div className={theme}>
@@ -62,6 +62,8 @@ const TodoList = ({ todosList, getTodo, onAddTodo, onClickDelete, onClickEdit, o
                     </section>
                     <Footer
                         countActive={countActive}
+                        clearComplete={clearComplete}
+                        onClearComplete={onClearComplete}
                     />
                 </Fragment>
             ) : (
@@ -74,6 +76,7 @@ const TodoList = ({ todosList, getTodo, onAddTodo, onClickDelete, onClickEdit, o
 }
 
 const mapStateToProps = (state) => {
+    console.log(state.todos)
     return {
         todosList: state.todos
     }
@@ -98,6 +101,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         onClickAllComplete: (params) => {
             dispatch(completeAllListTodo(params))
+        },
+        onClearComplete: () => {
+            dispatch(clearCompleteListTodo())
         }
     }
 }
