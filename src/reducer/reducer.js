@@ -3,22 +3,10 @@ const INITIAL_STATE = {
     load: false
 }
 
-const todo = (state, action) => {
-    switch (action.type) {
-        case 'COMPLETE_LIST_TODO':
-            return Object.assign({},
-                state,
-                { completed: !state.completed }
-            )
-        default:
-            return state
-    }
-}
-
-
 const todosReducer = (state = INITIAL_STATE, action) => {
 
     switch (action.type) {
+        //Fetch Todo
         case 'GET_LIST_TODO': {
             return {
                 ...state,
@@ -33,6 +21,7 @@ const todosReducer = (state = INITIAL_STATE, action) => {
                 load: false,
             };
         }
+        //Add Todo
         case 'ADD_LIST_TODO': {
             return {
                 ...state,
@@ -40,12 +29,12 @@ const todosReducer = (state = INITIAL_STATE, action) => {
         }
         case 'ADD_LIST_TODO_SUCCESS': {
             const { data } = action.payload
-            debugger;
             return {
                 ...state,
                 todos: state.todos.concat([data])
             };
         }
+        //Delete Todo
         case 'DELETE_LIST_TODO': {
             return {
                 ...state,
@@ -58,16 +47,61 @@ const todosReducer = (state = INITIAL_STATE, action) => {
                 todos: state.todos.filter((item) => item.id !== data)
             };
         }
-        case 'COMPLETE_LIST_TODO': {
+        //Edit Todo
+        case 'EDIT_LIST_TODO': {
+            return { ...state }
+        }
+        case 'EDIT_LIST_TODO_SUCCESS': {
+            const { data } = action.payload
+            const { todos } = state
+            const index = todos.findIndex(item => item.id === data.id);
+            if (index !== -1) {
+                const newTodos = [
+                    ...todos.slice(0, index),
+                    data,
+                    ...todos.slice(index + 1)
+                ]
+                return {
+                    ...state,
+                    todos: newTodos
+                }
+            }
             return {
-                ...state,
-            };
+                ...state
+            }
+        }
+        //Complete Todo
+        case 'COMPLETE_LIST_TODO': {
+            return { ...state }
         }
         case 'COMPLETE_LIST_TODO_SUCCESS': {
             const { data } = action.payload
+            const { todos } = state
+            const index = todos.findIndex(item => item.id === data.id);
+            if (index !== -1) {
+                const newTodos = [
+                    ...todos.slice(0, index),
+                    data,
+                    ...todos.slice(index + 1)
+                ]
+                return {
+                    ...state,
+                    todos: newTodos
+                }
+            }
+            return {
+                ...state
+            }
+        }
+        //Complete All Todo
+        case 'COMPLETE_ALL_LIST_TODO': {
+            return { ...state }
+        }
+        case 'COMPLETE_ALL_LIST_TODO_SUCCESS': {
+            const allComplete = state.todos.every(item => item.complete)
             return {
                 ...state,
-                todos: state.todos.map(t => t.id === data.id ? todo(t, data) : t)
+                todos: state.todos.map(item => ({ ...item, complete: !allComplete }))
             }
         }
         default:

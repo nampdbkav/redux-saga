@@ -1,19 +1,54 @@
-import React from "react";
+import React, { useState } from 'react';
 
-const TodoItem = ({ todo, index, onClickDelete, onClickComplete }) => {
+const TodoItem = ({ todo, index, onClickDelete, onClickEdit, onClickComplete }) => {
+
+    const [text, setText] = useState(todo.text)
+    const [complete, setComplete] = useState(!todo.complete)
+    const [open, setOpen] = useState(false)
+
+    const handleEnter = (event) => {
+        const data = { id: todo.id, text }
+        if (event.key === 'Enter') {
+            onClickEdit(data)
+            setOpen(!open)
+        }
+    }
+
+    const handleClick = () => {
+        const data = { id: todo.id, complete }
+        onClickComplete(data)
+        setComplete(!complete)
+    }
+
+    const handleEdit = () => {
+        setOpen(true)
+    }
 
     return (
         <li>
-            <div className="first" style={{ textDecoration: todo.complete ? 'line-through' : '' }}>
+            <div className='first' style={{ textDecoration: todo.complete ? 'line-through' : '' }}>
                 <input type='checkbox'
                     checked={todo.complete}
-                    onChange={() => onClickComplete(todo.id)}
+                    onClick={handleClick}
+                    onChange={() => { }}
                 />
-                <div className="double">
-                    {(index + 1) + ' : ' + todo.text}
+                <div className='double'>
+                    {open ? (
+                        <input className='input-edit'
+                            value={text}
+                            onKeyDown={handleEnter}
+                            type='text'
+                            autoFocus
+                            onChange={(e) => {
+                                console.log('edit');
+                                setText(e.target.value);
+                            }}
+                        />
+                    ) : ((index + 1) + ' : ' + todo.text)}
+
                 </div>
             </div>
-            <button >Edit</button>
+            <button onClick={handleEdit} >Edit</button>
             <button onClick={onClickDelete}>Delete</button>
         </li>
     )

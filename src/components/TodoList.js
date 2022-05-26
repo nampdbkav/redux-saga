@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useContext, Fragment } from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useState, useContext, Fragment } from 'react';
+import { connect } from 'react-redux';
 
-import { addListTodo, getListTodo, deleteListTodo, completeListTodo } from "../action/action";
-import { ThemeContext } from "./ThemeContext";
-import Header from "./Header";
-import TodoItem from "./TodoItem"
-import Footer from "./Footer";
+import { addListTodo, getListTodo, deleteListTodo, editListTodo, completeListTodo, completeAllListTodo } from '../action/action';
+import { ThemeContext } from './ThemeContext';
+import Header from './Header';
+import TodoItem from './TodoItem'
+import Footer from './Footer';
 
 
-const TodoList = ({ todosList, getTodo, onAddTodo, onClickDelete, onClickComplete }) => {
+const TodoList = ({ todosList, getTodo, onAddTodo, onClickDelete, onClickEdit, onClickComplete, onClickAllComplete }) => {
 
     const { todos, load } = todosList
     const [isLoad, setIsLoad] = useState(load)
@@ -39,20 +39,23 @@ const TodoList = ({ todosList, getTodo, onAddTodo, onClickDelete, onClickComplet
     return (
         <div className={theme}>
             <Header
+                data={data}
                 onAddTodo={onAddTodo}
                 todos={todos}
+                onClickAllComplete={() => onClickAllComplete()}
             />
             {isLoad ? (
                 <Fragment>
-                    <section className="main">
-                        <ul className="todo-list">
+                    <section className='main'>
+                        <ul className='todo-list'>
                             {data.map((todo, index) => (
                                 <TodoItem
                                     key={todo.id}
                                     todo={todo}
                                     index={index}
                                     onClickDelete={() => onClickDelete(todo.id)}
-                                    onClickComplete={() => onClickComplete(todo.id)}
+                                    onClickEdit={onClickEdit}
+                                    onClickComplete={onClickComplete}
                                 />
                             ))}
                         </ul>
@@ -62,8 +65,8 @@ const TodoList = ({ todosList, getTodo, onAddTodo, onClickDelete, onClickComplet
                     />
                 </Fragment>
             ) : (
-                <div className="image">
-                    <img src="https://i.imgur.com/ZZvau7l.gif" />
+                <div className='image'>
+                    <img src='https://i.imgur.com/ZZvau7l.gif' alt='Loading' />
                 </div>)}
         </div>
     )
@@ -87,8 +90,14 @@ const mapDispatchToProps = (dispatch) => {
         onClickDelete: (id) => {
             dispatch(deleteListTodo(id))
         },
+        onClickEdit: (params) => {
+            dispatch(editListTodo(params))
+        },
         onClickComplete: (id) => {
             dispatch(completeListTodo(id))
+        },
+        onClickAllComplete: (params) => {
+            dispatch(completeAllListTodo(params))
         }
     }
 }

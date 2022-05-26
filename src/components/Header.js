@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { ThemeContext } from "./ThemeContext";
 
-const Header = ({ onAddTodo }) => {
+const Header = ({ data, onAddTodo, onClickAllComplete }) => {
 
     const [text, setText] = useState('')
 
@@ -32,7 +32,7 @@ const Header = ({ onAddTodo }) => {
                 <input className="toggle-all" type="hidden" />
                 <label
                     htmlFor="toggle-all"
-                // onClick={checkAll}
+                    onClick={onClickAllComplete}
                 ></label>
                 <input className='new-todo'
                     style={{ background: theme === 'dark' ? '#FF7BA9' : '#fff' }}

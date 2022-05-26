@@ -51,6 +51,26 @@ export const deleteListTodoSuccess = (data) => {
     }
 }
 
+//Edit Todo
+export const editListTodo = (id, text) => {
+    return {
+        type: 'EDIT_LIST_TODO',
+        payload: {
+            id,
+            text
+        }
+    }
+}
+
+export const editListTodoSuccess = (data) => {
+    return {
+        type: 'EDIT_LIST_TODO_SUCCESS',
+        payload: {
+            data
+        }
+    }
+}
+
 //Complete Todo
 export const completeListTodo = (id, complete) => {
     return {
@@ -65,8 +85,20 @@ export const completeListTodo = (id, complete) => {
 export const completeListTodoSuccess = (data) => {
     return {
         type: 'COMPLETE_LIST_TODO_SUCCESS',
-        payload: {
-            data
-        }
+        payload: { data }
+    }
+}
+
+//Complete All Todo
+export const completeAllListTodo = () => {
+    return {
+        type: 'COMPLETE_ALL_LIST_TODO',
+    }
+}
+
+export const completeAllListTodoSuccess = () => {
+    debugger;
+    return {
+        type: 'COMPLETE_ALL_LIST_TODO_SUCCESS',
     }
 }

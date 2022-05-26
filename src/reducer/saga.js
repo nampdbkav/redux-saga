@@ -1,10 +1,10 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
-import { getTodosData, addTodosData, deleteTodosData, completeTodosData } from './todosAPI'
-import { addListTodoSuccess, completeListTodoSuccess, deleteListTodoSuccess, getListTodoSuccess } from '../action/action';
+import { getTodosData, addTodosData, deleteTodosData, editTodosData, completeTodosData, completeAllTodosData } from './todosAPI'
+import { addListTodoSuccess, editListTodoSuccess, deleteListTodoSuccess, getListTodoSuccess, completeListTodoSuccess, completeAllListTodoSuccess } from '../action/action';
 
 //Fetch Todos
-function* getListTodoSaga(action) {
+function* getListTodoSaga() {
     try {
         const data = yield call(getTodosData);
         yield put(getListTodoSuccess(data));
@@ -35,10 +35,9 @@ function* onAdd() {
 
 //Delete Todo
 function* deleteTodo({ payload }) {
+    const { id } = payload
     try {
-        const { id } = payload
-        const res = yield call(deleteTodosData, id)
-        const { data } = res
+        yield call(deleteTodosData, id)
         yield put(deleteListTodoSuccess(id))
     } catch (error) {
         console.log(error.message)
@@ -49,13 +48,29 @@ function* onDelete() {
     yield takeLatest('DELETE_LIST_TODO', deleteTodo)
 }
 
+//Edit Todo
+function* editTodo({ payload }) {
+    const { id, text } = payload
+    try {
+        const res = yield call(editTodosData, id, text)
+        const { data } = res
+        yield put(editListTodoSuccess(data))
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+function* onEdit() {
+    yield takeLatest('EDIT_LIST_TODO', editTodo)
+}
+
 //Complete Todo
 function* completeTodo({ payload }) {
-    const { id } = payload
+    const { id, complete } = payload
     try {
-        const todo = yield call(completeTodosData, id)
-        const { complete } = todo
-        yield put(completeListTodoSuccess(id, complete))
+        const res = yield call(completeTodosData, id, complete)
+        const { data } = res
+        yield put(completeListTodoSuccess(data))
     } catch (error) {
         console.log(error.message)
     }
@@ -65,8 +80,22 @@ function* onComplete() {
     yield takeLatest('COMPLETE_LIST_TODO', completeTodo)
 }
 
+//Complete All Todo
+function* completeAllTodo({ payload }) {
+    try {
+        const data = yield call(completeAllTodosData)
+        yield put(completeAllListTodoSuccess(data))
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+function* onCompleteAll() {
+    yield takeLatest('COMPLETE_ALL_TODO', completeAllTodo)
+}
+
 function* todos() {
-    yield all([call(todosSaga), call(onAdd), call(onDelete), call(onComplete)])
+    yield all([call(todosSaga), call(onAdd), call(onDelete), call(onEdit), call(onComplete), call(onCompleteAll)])
 }
 
 export default todos;
