@@ -90,10 +90,9 @@ export const completeListTodoSuccess = (data) => {
 }
 
 //Complete All Todo
-export const completeAllListTodo = (payload) => {
+export const completeAllListTodo = () => {
     return {
         type: 'COMPLETE_ALL_LIST_TODO',
-        payload
     }
 }
 
@@ -105,7 +104,6 @@ export const completeAllListTodoSuccess = () => {
 
 //Remove Complete Todo
 export const clearCompleteListTodo = () => {
-    debugger
     return {
         type: 'CLEAR_COMPLETE_LIST_TODO',
     }
@@ -117,7 +115,7 @@ export const clearCompleteListTodoSuccess = () => {
     }
 }
 
-
+//Filter Show
 export const setFilterShow = (filter) => {
     return {
         type: 'SET_FILTER',

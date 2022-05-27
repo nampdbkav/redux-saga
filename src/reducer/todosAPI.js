@@ -27,7 +27,7 @@ export const completeTodosData = (data) => {
 
 //Complete All Todo
 export const completeAllTodosData = () => {
-    return axios.put(`https://627c69afe5ac2c452aefc225.mockapi.io/api/todos`)
+    return axios.get(`https://627c69afe5ac2c452aefc225.mockapi.io/api/todos`)
 }
 
 //Remove Complete Todo

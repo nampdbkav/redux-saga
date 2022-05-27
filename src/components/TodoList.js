@@ -57,7 +57,7 @@ const TodoList = ({ todosList, filter, getTodo, onAddTodo, onClickDelete, onClic
                 data={data}
                 onAddTodo={onAddTodo}
                 todos={todos}
-                onClickAllComplete={() => onClickAllComplete()}
+                onClickAllComplete={onClickAllComplete}
             />
             {isLoad ? (
                 <Fragment>
@@ -114,8 +114,8 @@ const mapDispatchToProps = (dispatch) => {
         onClickComplete: (id) => {
             dispatch(completeListTodo(id))
         },
-        onClickAllComplete: (params) => {
-            dispatch(completeAllListTodo(params))
+        onClickAllComplete: () => {
+            dispatch(completeAllListTodo())
         },
         onClearComplete: () => {
             dispatch(clearCompleteListTodo())

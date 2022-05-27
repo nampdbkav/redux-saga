@@ -80,7 +80,7 @@ function* onComplete() {
 }
 
 //Complete All Todo
-function* completeAllTodo({ payload }) {
+function* completeAllTodo() {
     try {
         const data = yield call(completeAllTodosData)
         yield put(completeAllListTodoSuccess(data))
