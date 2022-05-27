@@ -105,6 +105,7 @@ export const completeAllListTodoSuccess = () => {
 
 //Remove Complete Todo
 export const clearCompleteListTodo = () => {
+    debugger
     return {
         type: 'CLEAR_COMPLETE_LIST_TODO',
     }
@@ -114,4 +115,18 @@ export const clearCompleteListTodoSuccess = () => {
     return {
         type: 'CLEAR_COMPLETE_LIST_TODO_SUCCESS',
     }
+}
+
+
+export const setFilterShow = (filter) => {
+    return {
+        type: 'SET_FILTER',
+        filter
+    }
+}
+
+export const setShow = {
+    SHOW_ALL: 'SHOW_ALL',
+    SHOW_COMPLETED: 'SHOW_COMPLETED',
+    SHOW_ACTIVE: 'SHOW_ACTIVE'
 }

@@ -256,4 +256,5 @@ label {
 .image{
     text-align: center;
     z-index: -1;
+    margin-top: -50px;
 }

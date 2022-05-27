@@ -1,33 +1,48 @@
 import React, { useEffect, useState, useContext, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import { addListTodo, getListTodo, deleteListTodo, editListTodo, completeListTodo, completeAllListTodo, clearCompleteListTodo } from '../action/action';
+import { addListTodo, getListTodo, deleteListTodo, editListTodo, completeListTodo, completeAllListTodo, clearCompleteListTodo, setShow } from '../action/action';
 import { ThemeContext } from './ThemeContext';
 import Header from './Header';
 import TodoItem from './TodoItem'
 import Footer from './Footer';
 
 
-const TodoList = ({ todosList, getTodo, onAddTodo, onClickDelete, onClickEdit, onClickComplete, onClickAllComplete, onClearComplete }) => {
+const filterItem = (items, filter) => {
+    switch (filter) {
+        case setShow.SHOW_ALL:
+            return items
+        case setShow.SHOW_ACTIVE:
+            return items.filter(t => !t.complete)
+        case setShow.SHOW_COMPLETED:
+            return items.filter(t => t.complete)
+        default:
+            return items
+    }
+}
+
+const TodoList = ({ todosList, filter, getTodo, onAddTodo, onClickDelete, onClickEdit, onClickComplete, onClickAllComplete, onClearComplete }) => {
 
     const { todos, load } = todosList
+    const todo = filterItem(todos, filter)
     const [isLoad, setIsLoad] = useState(load)
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(todo);
+
 
     useEffect(() => {
-        // setTimeout(() => {
-        //     getTodo()
-        //     setIsLoad(!load)
-        // }, 1000)
-        getTodo()
-        setIsLoad(!load)
+        setTimeout(() => {
+            getTodo()
+            setIsLoad(!load)
+        }, 2500)
+        // getTodo()
+        // setIsLoad(!load)
     }, [])
 
     useEffect(() => {
         const types = {
             id: 'id'
         }
-        const sorted = [...todos].sort((a, b) => b[types.id] - a[types.id])
+        const sorted = [...todo].sort((a, b) => b[types.id] - a[types.id])
         setData(sorted)
     }, [todos])
 
@@ -68,7 +83,7 @@ const TodoList = ({ todosList, getTodo, onAddTodo, onClickDelete, onClickEdit, o
                 </Fragment>
             ) : (
                 <div className='image'>
-                    <img src='https://i.imgur.com/ZZvau7l.gif' alt='Loading' />
+                    <img src='https://i.imgur.com/fYDP8HP.gif' alt='Loading' />
                 </div>)}
         </div>
     )
@@ -76,9 +91,9 @@ const TodoList = ({ todosList, getTodo, onAddTodo, onClickDelete, onClickEdit, o
 }
 
 const mapStateToProps = (state) => {
-    console.log(state.todos)
     return {
-        todosList: state.todos
+        todosList: state.todos,
+        filter: state.filter
     }
 }
 
