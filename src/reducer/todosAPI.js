@@ -25,12 +25,12 @@ export const completeTodosData = (data) => {
     return axios.put(`https://627c69afe5ac2c452aefc225.mockapi.io/api/todos/${data.id}`, data)
 }
 
-//Complete All Todo
-export const completeAllTodosData = () => {
-    return axios.get(`https://627c69afe5ac2c452aefc225.mockapi.io/api/todos`)
-}
-
 //Remove Complete Todo
 export const clearCompleteTodosData = () => {
-    return axios.delete(`https://627c69afe5ac2c452aefc225.mockapi.io/api/todos`);
+    return axios.get(`https://627c69afe5ac2c452aefc225.mockapi.io/api/todos`);
+}
+
+//Complete All Todo
+export const completeAllTodosData = () => {
+    return axios.get(`https://627c69afe5ac2c452aefc225.mockapi.io/api/todos`);
 }

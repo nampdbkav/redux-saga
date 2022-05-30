@@ -93,6 +93,16 @@ const todosReducer = (state = INITIAL_STATE, action) => {
                 ...state
             }
         }
+        //Remove Complete Todo
+        case 'CLEAR_COMPLETE_LIST_TODO': {
+            return { ...state }
+        }
+        case 'CLEAR_COMPLETE_LIST_TODO_SUCCESS': {
+            return {
+                ...state,
+                todos: state.todos.filter((item) => item.complete === false)
+            }
+        }
         //Complete All Todo
         case 'COMPLETE_ALL_LIST_TODO': {
             return { ...state }
@@ -102,16 +112,6 @@ const todosReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 todos: state.todos.map(item => ({ ...item, complete: !allComplete }))
-            }
-        }
-        //Remove Complete Todo
-        case 'CLEAR_COMPLETE_LIST_TODO': {
-            return { ...state }
-        }
-        case 'CLEAR_COMPLETE_LIST_TODO_SUCCESS': {
-            return {
-                ...state,
-                todos: state.todos.filter((item) => item.complete === false)
             }
         }
         default:

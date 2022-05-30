@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useContext, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import { addListTodo, getListTodo, deleteListTodo, editListTodo, completeListTodo, completeAllListTodo, clearCompleteListTodo, setShow } from '../action/action';
+import { addListTodo, getListTodo, deleteListTodo, editListTodo, completeListTodo, clearCompleteListTodo, setShow, completeAllListTodo } from '../action/action';
 import { ThemeContext } from './ThemeContext';
 import Header from './Header';
 import TodoItem from './TodoItem'
 import Footer from './Footer';
+import Scroll from './Scroll';
 
 
 const filterItem = (items, filter) => {
@@ -21,7 +22,7 @@ const filterItem = (items, filter) => {
     }
 }
 
-const TodoList = ({ todosList, filter, getTodo, onAddTodo, onClickDelete, onClickEdit, onClickComplete, onClickAllComplete, onClearComplete }) => {
+const TodoList = ({ page, todosList, filter, getTodo, onAddTodo, onClickDelete, onClickEdit, onClickComplete, onClearComplete, onClickAllComplete }) => {
 
     const { todos, load } = todosList
     const todo = filterItem(todos, filter)
@@ -34,15 +35,13 @@ const TodoList = ({ todosList, filter, getTodo, onAddTodo, onClickDelete, onClic
             getTodo()
             setIsLoad(!load)
         }, 2500)
-        // getTodo()
-        // setIsLoad(!load)
     }, [])
 
     useEffect(() => {
         const types = {
             id: 'id'
         }
-        const sorted = [...todo].sort((a, b) => b[types.id] - a[types.id])
+        const sorted = [...todos].sort((a, b) => b[types.id] - a[types.id])
         setData(sorted)
     }, [todos])
 
@@ -56,14 +55,13 @@ const TodoList = ({ todosList, filter, getTodo, onAddTodo, onClickDelete, onClic
             <Header
                 data={data}
                 onAddTodo={onAddTodo}
-                todos={todos}
                 onClickAllComplete={onClickAllComplete}
             />
             {isLoad ? (
                 <Fragment>
                     <section className='main'>
                         <ul className='todo-list'>
-                            {data.map((todo, index) => (
+                            {todo.map((todo, index) => (
                                 <TodoItem
                                     key={todo.id}
                                     todo={todo}
@@ -114,11 +112,11 @@ const mapDispatchToProps = (dispatch) => {
         onClickComplete: (id) => {
             dispatch(completeListTodo(id))
         },
-        onClickAllComplete: () => {
-            dispatch(completeAllListTodo())
-        },
         onClearComplete: () => {
             dispatch(clearCompleteListTodo())
+        },
+        onClickAllComplete: () => {
+            dispatch(completeAllListTodo())
         }
     }
 }

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { ThemeContext } from "./ThemeContext";
 
-const Header = ({ data, onAddTodo, onClickAllComplete }) => {
+const Header = ({ onAddTodo, onClickAllComplete }) => {
 
     const [text, setText] = useState('')
 
@@ -27,7 +27,7 @@ const Header = ({ data, onAddTodo, onClickAllComplete }) => {
 
     return (
         <form onSubmit={handleSubmit} className='todo-form'>
-            <code>todos</code>
+            <code className={theme}>todos</code>
             <div className="input-wrapper">
                 <input className="toggle-all" type="hidden" />
                 <label

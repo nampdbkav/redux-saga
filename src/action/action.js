@@ -89,19 +89,6 @@ export const completeListTodoSuccess = (data) => {
     }
 }
 
-//Complete All Todo
-export const completeAllListTodo = () => {
-    return {
-        type: 'COMPLETE_ALL_LIST_TODO',
-    }
-}
-
-export const completeAllListTodoSuccess = () => {
-    return {
-        type: 'COMPLETE_ALL_LIST_TODO_SUCCESS',
-    }
-}
-
 //Remove Complete Todo
 export const clearCompleteListTodo = () => {
     return {
@@ -112,6 +99,19 @@ export const clearCompleteListTodo = () => {
 export const clearCompleteListTodoSuccess = () => {
     return {
         type: 'CLEAR_COMPLETE_LIST_TODO_SUCCESS',
+    }
+}
+
+//Complete All Todo
+export const completeAllListTodo = () => {
+    return {
+        type: 'COMPLETE_ALL_LIST_TODO'
+    }
+}
+
+export const completeAllListTodoSuccess = () => {
+    return {
+        type: 'COMPLETE_ALL_LIST_TODO_SUCCESS'
     }
 }
 

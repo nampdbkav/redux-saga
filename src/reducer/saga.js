@@ -1,6 +1,6 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { getTodosData, addTodosData, deleteTodosData, editTodosData, completeTodosData, completeAllTodosData, clearCompleteTodosData } from './todosAPI'
-import { addListTodoSuccess, editListTodoSuccess, deleteListTodoSuccess, getListTodoSuccess, completeListTodoSuccess, completeAllListTodoSuccess, clearCompleteListTodoSuccess } from '../action/action';
+import { getTodosData, addTodosData, deleteTodosData, editTodosData, completeTodosData, clearCompleteTodosData, completeAllTodosData } from './todosAPI'
+import { addListTodoSuccess, editListTodoSuccess, deleteListTodoSuccess, getListTodoSuccess, completeListTodoSuccess, clearCompleteListTodoSuccess, completeAllListTodoSuccess } from '../action/action';
 
 //Fetch Todos
 function* getListTodoSaga() {
@@ -79,20 +79,6 @@ function* onComplete() {
     yield takeLatest('COMPLETE_LIST_TODO', completeTodo)
 }
 
-//Complete All Todo
-function* completeAllTodo() {
-    try {
-        const data = yield call(completeAllTodosData)
-        yield put(completeAllListTodoSuccess(data))
-    } catch (error) {
-        console.log(error.message);
-    }
-}
-
-function* onCompleteAll() {
-    yield takeLatest('COMPLETE_ALL_TODO', completeAllTodo)
-}
-
 //Remove Complete Todo
 function* clearCompleteTodo() {
     try {
@@ -107,8 +93,22 @@ function* onClear() {
     yield takeLatest('CLEAR_COMPLETE_LIST_TODO', clearCompleteTodo)
 }
 
+//Complete All Todo
+function* completeAllTodo() {
+    try {
+        const data = yield call(completeAllTodosData)
+        yield put(completeAllListTodoSuccess(data))
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+function* onAllComplete() {
+    yield takeLatest('COMPLETE_ALL_LIST_TODO', completeAllTodo)
+}
+
 function* todos() {
-    yield all([call(todosSaga), call(onAdd), call(onDelete), call(onEdit), call(onComplete), call(onCompleteAll), call(onClear)])
+    yield all([call(todosSaga), call(onAdd), call(onDelete), call(onEdit), call(onComplete), call(onClear), call(onAllComplete)])
 }
 
 export default todos;
