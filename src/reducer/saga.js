@@ -107,6 +107,8 @@ function* onAllComplete() {
     yield takeLatest('COMPLETE_ALL_LIST_TODO', completeAllTodo)
 }
 
+
+
 function* todos() {
     yield all([call(todosSaga), call(onAdd), call(onDelete), call(onEdit), call(onComplete), call(onClear), call(onAllComplete)])
 }

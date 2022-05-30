@@ -3,11 +3,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { setFilterShow } from "../action/action";
 
-const Link = ({ active, children, onClick }) => {
+const Link = ({ stateFilter, children, onClick, filter }) => {
     return (
         <button
             onClick={onClick}
-            disabled={active}
+            disabled={filter === stateFilter}
         >
             {children}
         </button>
@@ -15,7 +15,7 @@ const Link = ({ active, children, onClick }) => {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    active: ownProps.filter === state.filter
+    stateFilter: state.filter
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

@@ -6,7 +6,6 @@ import { ThemeContext } from './ThemeContext';
 import Header from './Header';
 import TodoItem from './TodoItem'
 import Footer from './Footer';
-import Scroll from './Scroll';
 
 
 const filterItem = (items, filter) => {
@@ -23,37 +22,29 @@ const filterItem = (items, filter) => {
 }
 
 const TodoList = ({ page, todosList, filter, getTodo, onAddTodo, onClickDelete, onClickEdit, onClickComplete, onClearComplete, onClickAllComplete }) => {
-
     const { todos, load } = todosList
-    const todo = filterItem(todos, filter)
-    const [isLoad, setIsLoad] = useState(load)
-    const [data, setData] = useState(todo);
-
+    // const todo = filterItem(todos, filter);
+    const [isLoad, setIsLoad] = useState(load);
 
     useEffect(() => {
         setTimeout(() => {
             getTodo()
             setIsLoad(!load)
         }, 2500)
-    }, [])
+    }, []);
 
-    useEffect(() => {
-        const types = {
-            id: 'id'
-        }
-        const sorted = [...todos].sort((a, b) => b[types.id] - a[types.id])
-        setData(sorted)
-    }, [todos])
+    const { theme, setTheme } = useContext(ThemeContext);
 
-    const theme = useContext(ThemeContext)
-
-    let countActive = [...todos].filter((todo) => !todo.complete).length
-    let clearComplete = [...todos].some(todo => todo.complete)
+    let countActive = [...todos].filter((todo) => !todo.complete).length;
+    let clearComplete = [...todos].some(todo => todo.complete);
 
     return (
         <div className={theme}>
+            <div className="slideOne" style={{ background: theme === 'light' ? '#FFCCD2' : '#F5F5F5' }}>
+                <input type="checkbox" value="None" id="slideOne" name="check" onClick={setTheme} />
+                <label style={{ background: theme === 'light' ? '#FF7BA9' : '#fff' }} htmlFor="slideOne"></label>
+            </div>
             <Header
-                data={data}
                 onAddTodo={onAddTodo}
                 onClickAllComplete={onClickAllComplete}
             />
@@ -61,16 +52,23 @@ const TodoList = ({ page, todosList, filter, getTodo, onAddTodo, onClickDelete, 
                 <Fragment>
                     <section className='main'>
                         <ul className='todo-list'>
-                            {todo.map((todo, index) => (
-                                <TodoItem
+                            {todos.map((todo, index) => {
+                                let flag = false;
+                                if (filter === setShow.SHOW_ALL ||
+                                    (filter === setShow.SHOW_ACTIVE && !todo.complete) ||
+                                    (filter === setShow.SHOW_COMPLETED && todo.complete)
+                                ) {
+                                    flag = true;
+                                }
+                                return flag ? (<TodoItem
                                     key={todo.id}
                                     todo={todo}
                                     index={index}
                                     onClickDelete={() => onClickDelete(todo.id)}
                                     onClickEdit={onClickEdit}
                                     onClickComplete={onClickComplete}
-                                />
-                            ))}
+                                />) : null;
+                            })}
                         </ul>
                     </section>
                     <Footer

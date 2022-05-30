@@ -15,9 +15,9 @@ const Footer = ({ countActive, clearComplete, onClearComplete }) => {
                 <Link filter={setShow.SHOW_ALL}>All</Link>
                 <Link filter={setShow.SHOW_ACTIVE}>Active</Link>
                 <Link filter={setShow.SHOW_COMPLETED}>Complete</Link>
-                {clearComplete ? (
+                {clearComplete && (
                     <button onClick={onClearComplete}>Clear Complete</button>
-                ) : null}
+                )}
             </div>
         </div>
     )

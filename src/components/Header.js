@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { useContext } from "react";
 import { ThemeContext } from "./ThemeContext";
 
 const Header = ({ onAddTodo, onClickAllComplete }) => {
-
-    const [text, setText] = useState('')
+    const [text, setText] = useState('');
+    const { theme } = useContext(ThemeContext);
 
     const handleChane = (event) => {
         setText(event.target.value)
@@ -17,13 +17,6 @@ const Header = ({ onAddTodo, onClickAllComplete }) => {
         onAddTodo(data)
         setText('')
     }
-
-    const theme = useContext(ThemeContext)
-
-    useEffect(() => {
-        const body = document.getElementsByTagName("body");
-        body[0].className = theme
-    }, [theme])
 
     return (
         <form onSubmit={handleSubmit} className='todo-form'>
