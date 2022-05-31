@@ -4,7 +4,7 @@ import Link from "./Link";
 import { setShow } from "../action/action";
 
 const Footer = ({ countActive, clearComplete, onClearComplete }) => {
-    const theme = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
     return (
         <div className="footer">
             <div className={theme}>

@@ -8,20 +8,7 @@ import TodoItem from './TodoItem'
 import Footer from './Footer';
 
 
-const filterItem = (items, filter) => {
-    switch (filter) {
-        case setShow.SHOW_ALL:
-            return items
-        case setShow.SHOW_ACTIVE:
-            return items.filter(t => !t.complete)
-        case setShow.SHOW_COMPLETED:
-            return items.filter(t => t.complete)
-        default:
-            return items
-    }
-}
-
-const TodoList = ({ page, todosList, filter, getTodo, onAddTodo, onClickDelete, onClickEdit, onClickComplete, onClearComplete, onClickAllComplete }) => {
+const TodoList = ({ todosList, filter, getTodo, onAddTodo, onClickDelete, onClickEdit, onClickComplete, onClearComplete, onClickAllComplete }) => {
     const { todos, load } = todosList
     // const todo = filterItem(todos, filter);
     const [isLoad, setIsLoad] = useState(load);
@@ -47,6 +34,7 @@ const TodoList = ({ page, todosList, filter, getTodo, onAddTodo, onClickDelete, 
             <Header
                 onAddTodo={onAddTodo}
                 onClickAllComplete={onClickAllComplete}
+                todos={todos}
             />
             {isLoad ? (
                 <Fragment>
@@ -88,7 +76,7 @@ const TodoList = ({ page, todosList, filter, getTodo, onAddTodo, onClickDelete, 
 
 const mapStateToProps = (state) => {
     return {
-        todosList: state.todos,
+        todosList: state.todoList,
         filter: state.filter
     }
 }

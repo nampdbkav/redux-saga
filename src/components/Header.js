@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 
 import { useContext } from "react";
+import todos from "../reducer/saga";
 import { ThemeContext } from "./ThemeContext";
 
-const Header = ({ onAddTodo, onClickAllComplete }) => {
+const Header = ({ onAddTodo, onClickAllComplete, todos }) => {
     const [text, setText] = useState('');
     const { theme } = useContext(ThemeContext);
 
@@ -22,7 +23,8 @@ const Header = ({ onAddTodo, onClickAllComplete }) => {
         <form onSubmit={handleSubmit} className='todo-form'>
             <code className={theme}>todos</code>
             <div className="input-wrapper">
-                <input className="toggle-all" type="hidden" />
+                {todos.length > 0 && (<input className="toggle-all" type="hidden" />)}
+
                 <label
                     htmlFor="toggle-all"
                     onClick={onClickAllComplete}
