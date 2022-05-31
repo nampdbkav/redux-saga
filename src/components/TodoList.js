@@ -12,6 +12,7 @@ const TodoList = ({ todosList, filter, getTodo, onAddTodo, onClickDelete, onClic
     const { todos, load } = todosList
     // const todo = filterItem(todos, filter);
     const [isLoad, setIsLoad] = useState(load);
+    const [data, setData] = useState([])
 
     useEffect(() => {
         setTimeout(() => {
@@ -19,6 +20,14 @@ const TodoList = ({ todosList, filter, getTodo, onAddTodo, onClickDelete, onClic
             setIsLoad(!load)
         }, 2500)
     }, []);
+
+    useEffect(() => {
+        const type = {
+            id: 'id'
+        }
+        const sorted = [...todos].sort((a, b) => b[type.id] - a[type.id])
+        setData(sorted)
+    }, [todos])
 
     const { theme, setTheme } = useContext(ThemeContext);
 
@@ -40,7 +49,7 @@ const TodoList = ({ todosList, filter, getTodo, onAddTodo, onClickDelete, onClic
                 <Fragment>
                     <section className='main'>
                         <ul className='todo-list'>
-                            {todos.map((todo, index) => {
+                            {data.map((todo, index) => {
                                 let flag = false;
                                 if (filter === setShow.SHOW_ALL ||
                                     (filter === setShow.SHOW_ACTIVE && !todo.complete) ||

@@ -40,7 +40,6 @@ const TodoItem = ({ todo, index, onClickDelete, onClickEdit, onClickComplete }) 
                             type='text'
                             autoFocus
                             onChange={(e) => {
-                                console.log('edit');
                                 setText(e.target.value);
                             }}
                         />
