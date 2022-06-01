@@ -1,4 +1,3 @@
-
 import { createSelector } from "reselect";
 
 const getFilter = (state) => state.filter
@@ -12,9 +11,10 @@ export const filterTodo = createSelector(
                 return todos
             case 'SHOW_ACTIVE':
                 return todos.filter(item => !item.complete)
-            case 'SHOW_COMPLETE':
+            case 'SHOW_COMPLETED':
                 return todos.filter(item => item.complete)
+            default:
+                throw new Error('Unknown filter: ' + filter)
         }
     }
 )
-

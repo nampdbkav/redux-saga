@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import { useContext } from "react";
-import todos from "../reducer/saga";
 import { ThemeContext } from "./ThemeContext";
 
 const Header = ({ onAddTodo, onClickAllComplete, todos }) => {

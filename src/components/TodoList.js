@@ -1,23 +1,24 @@
 import React, { useEffect, useState, useContext, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import { addListTodo, getListTodo, deleteListTodo, editListTodo, completeListTodo, clearCompleteListTodo, setShow, completeAllListTodo } from '../action/action';
+import { addListTodo, getListTodo, deleteListTodo, editListTodo, completeListTodo, clearCompleteListTodo, completeAllListTodo } from '../action/action';
 import { ThemeContext } from './ThemeContext';
 import Header from './Header';
 import TodoItem from './TodoItem'
 import Footer from './Footer';
+import { filterTodo } from '../selector';
 
 
-const TodoList = ({ todosList, filter, getTodo, onAddTodo, onClickDelete, onClickEdit, onClickComplete, onClearComplete, onClickAllComplete }) => {
-    const { todos, load } = todosList
-    // const todo = filterItem(todos, filter);
-    const [isLoad, setIsLoad] = useState(load);
+const TodoList = ({ filterTodos, getTodo, onAddTodo, onClickDelete, onClickEdit, onClickComplete, onClearComplete, onClickAllComplete }) => {
+    // const { todos, load } = todosList
+    // // const todo = filterItem(todos, filter);
+    const [isLoad, setIsLoad] = useState(false);
     const [data, setData] = useState([])
 
     useEffect(() => {
         setTimeout(() => {
             getTodo()
-            setIsLoad(!load)
+            setIsLoad(!isLoad)
         }, 2500)
     }, []);
 
@@ -25,14 +26,14 @@ const TodoList = ({ todosList, filter, getTodo, onAddTodo, onClickDelete, onClic
         const type = {
             id: 'id'
         }
-        const sorted = [...todos].sort((a, b) => b[type.id] - a[type.id])
+        const sorted = [...filterTodos].sort((a, b) => b[type.id] - a[type.id])
         setData(sorted)
-    }, [todos])
+    }, [filterTodos])
 
     const { theme, setTheme } = useContext(ThemeContext);
 
-    let countActive = [...todos].filter((todo) => !todo.complete).length;
-    let clearComplete = [...todos].some(todo => todo.complete);
+    let countActive = [...filterTodos].filter((todo) => !todo.complete).length;
+    let clearComplete = [...filterTodos].some(todo => todo.complete);
 
     return (
         <div className={theme}>
@@ -43,35 +44,29 @@ const TodoList = ({ todosList, filter, getTodo, onAddTodo, onClickDelete, onClic
             <Header
                 onAddTodo={onAddTodo}
                 onClickAllComplete={onClickAllComplete}
-                todos={todos}
+                todos={filterTodos}
             />
             {isLoad ? (
                 <Fragment>
                     <section className='main'>
                         <ul className='todo-list'>
-                            {data.map((todo, index) => {
-                                let flag = false;
-                                if (filter === setShow.SHOW_ALL ||
-                                    (filter === setShow.SHOW_ACTIVE && !todo.complete) ||
-                                    (filter === setShow.SHOW_COMPLETED && todo.complete)
-                                ) {
-                                    flag = true;
-                                }
-                                return flag ? (<TodoItem
+                            {data.map((todo, index) => (
+                                <TodoItem
                                     key={todo.id}
                                     todo={todo}
                                     index={index}
                                     onClickDelete={() => onClickDelete(todo.id)}
                                     onClickEdit={onClickEdit}
                                     onClickComplete={onClickComplete}
-                                />) : null;
-                            })}
+                                />
+                            ))}
                         </ul>
                     </section>
                     <Footer
                         countActive={countActive}
                         clearComplete={clearComplete}
                         onClearComplete={onClearComplete}
+                        todos={filterTodos}
                     />
                 </Fragment>
             ) : (
@@ -85,8 +80,9 @@ const TodoList = ({ todosList, filter, getTodo, onAddTodo, onClickDelete, onClic
 
 const mapStateToProps = (state) => {
     return {
-        todosList: state.todoList,
-        filter: state.filter
+        // todosList: state.todoList,
+        // filter: state.filter
+        filterTodos: filterTodo(state)
     }
 }
 
