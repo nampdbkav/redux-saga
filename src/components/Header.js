@@ -29,7 +29,7 @@ const Header = ({ onAddTodo, onClickAllComplete, todos }) => {
                     onClick={onClickAllComplete}
                 ></label>
                 <input className='new-todo'
-                    style={{ background: theme === 'dark' ? '#FF7BA9' : '#fff' }}
+                    style={{ background: theme === 'dark' ? '#5B4B8A' : '#fff' }}
                     name="text"
                     placeholder="What need to be done?"
                     value={text}

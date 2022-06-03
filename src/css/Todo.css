@@ -213,14 +213,14 @@ button:hover {
 }
 
 .dark {
-    background: #FF7BA9;
+    background: #5B4B8A;
     color     : #fff;
 }
 
 .slideOne {
     width        : 80px;
     height       : 30px;
-    background   : #FFCCD2;
+    background   : #A760FF;
     margin       : 20px;
     position     : relative;
     border-radius: 50px;
@@ -234,7 +234,7 @@ button:hover {
     top          : -3px;
     left         : -3px;
     cursor       : pointer;
-    background   : #FF7BA9;
+    background   : #5B4B8A;
     border-radius: 50px;
     box-shadow   : 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
     transition   : all 0.4s ease;
@@ -256,4 +256,37 @@ label {
     text-align: center;
     z-index: -1;
     margin-top: -50px;
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: #371B58;
+    display: flex;
+}
+.topnav a {
+    
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+  
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+table, td, th {  
+    border: 1px solid #ddd;
+    text-align: center;
+}
+  
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+th, td {
+    padding: 15px;
 }

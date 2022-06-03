@@ -10,8 +10,6 @@ import { filterTodo } from '../selector';
 
 
 const TodoList = ({ filterTodos, getTodo, onAddTodo, onClickDelete, onClickEdit, onClickComplete, onClearComplete, onClickAllComplete }) => {
-    // const { todos, load } = todosList
-    // // const todo = filterItem(todos, filter);
     const [isLoad, setIsLoad] = useState(false);
     const [data, setData] = useState([])
 
@@ -19,7 +17,7 @@ const TodoList = ({ filterTodos, getTodo, onAddTodo, onClickDelete, onClickEdit,
         setTimeout(() => {
             getTodo()
             setIsLoad(!isLoad)
-        }, 2500)
+        }, 2000)
     }, []);
 
     useEffect(() => {
@@ -37,9 +35,9 @@ const TodoList = ({ filterTodos, getTodo, onAddTodo, onClickDelete, onClickEdit,
 
     return (
         <div className={theme}>
-            <div className="slideOne" style={{ background: theme === 'light' ? '#FFCCD2' : '#F5F5F5' }}>
+            <div className="slideOne" style={{ background: theme === 'light' ? '#A760FF' : '#F5F5F5' }}>
                 <input type="checkbox" value="None" id="slideOne" name="check" onClick={setTheme} />
-                <label style={{ background: theme === 'light' ? '#FF7BA9' : '#fff' }} htmlFor="slideOne"></label>
+                <label style={{ background: theme === 'light' ? '#5B4B8A' : '#fff' }} htmlFor="slideOne"></label>
             </div>
             <Header
                 onAddTodo={onAddTodo}

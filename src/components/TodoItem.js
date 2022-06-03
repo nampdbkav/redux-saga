@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const TodoItem = ({ todo, index, onClickDelete, onClickEdit, onClickComplete }) => {
 
@@ -44,12 +45,14 @@ const TodoItem = ({ todo, index, onClickDelete, onClickEdit, onClickComplete }) 
                             }}
                         />
                     ) : ((index + 1) + ' : ' + todo.text)}
-
                 </div>
             </div>
+            <Link to={`/todo/${todo.id}`}>
+                <button>Info</button>
+            </Link>
             <button onClick={handleEdit} >Edit</button>
             <button onClick={onClickDelete}>Delete</button>
-        </li>
+        </li >
     )
 
 }
